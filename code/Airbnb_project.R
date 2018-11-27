@@ -122,6 +122,57 @@ train_data[is.nan(train_data$age),]
 # Data Exploration
 #--------------------------------
 
+# 8. AFFILIATE CHANNEL
+
+#Unique value and count of each affiliate channel: api, content, direct, remarketing
+table(abnb_train$affiliate_channel)
+                            
+#Plotting count of each affiliate channel using qplot
+qplot(x = affiliate_channel, data = abnb_train, main = "Count of affiliate channel", 
+xlab = "Affliliate Channel", fill=I("darkblue"), col=I("white"), alpha=I(.8))
+                            
+#Frequency plot for each destination country for "direct channel" and excluding US (as US is a big player)
+ggplot(subset(abnb_train, country_destination != "NDF" &  country_destination != "US" 
+   & affiliate_channel == "direct"),
+aes(x = affiliate_channel)) +
+geom_bar(color = "black", fill="green") + 
+facet_wrap(~country_destination) + theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+
+#9. AFFILIATE PROVIDER
+                            
+#Unique value and count of each affiliate provider:
+summary(abnb_train$affiliate_provider)
+                            
+#Plotting count of each affiliate provider using qplot
+qplot(x = affiliate_provider, data = abnb_train, main = "Count of affiliate provider", 
+      xlab = "Affliliate Provider", fill=I("darkblue"), col=I("white"), alpha=I(.8))+
+      theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+#Frequency plot for each destination country for "Google" and excluding US (US is a big player)
+ggplot(subset(abnb_train, country_destination != "NDF" &  country_destination != "US" 
+              & affiliate_provider == "google"), 
+       aes(x = affiliate_provider)) +
+  geom_bar(color = "black", fill="red")+ 
+  facet_wrap(~country_destination)
+                            
+# 10. FIRST_AFFILIATE_TRACKED
+   
+#Unique value and count of first affiliate tracked:
+summary(abnb_train$first_affiliate_tracked)
+                            
+#Plotting count of first affiliate tracked using qplot
+qplot(x = first_affiliate_tracked, data = abnb_train, main = "Count of first affiliate tracked", 
+      xlab = "First affiliate tracked", fill=I("darkblue"), col=I("white"), alpha=I(.8))
+
+#Frequency plot for each destination country for first affiliate tracked & excluding US
+ggplot(subset(abnb_train, country_destination != "NDF" &  country_destination != "US" 
+              & first_affiliate_tracked !='untracked'), 
+       aes(x = first_affiliate_tracked)) +
+  geom_bar(color = "black", fill="red")+ 
+  facet_wrap(~country_destination) +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))                           
+                            
 # 11. SIGNUP_APP
 
 # unique value for signup_app are : Android iOS Moweb Web
